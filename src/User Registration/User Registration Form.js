@@ -67,7 +67,7 @@ export default function RegistrationForm(){
           agreeToTerms: false,
         }));
         setErrors(validationErrors);
-  
+        setstrengthPassword("")
         toast.error('Failed Registration', {
           position: "top-right",
           autoClose: 2000,
@@ -80,6 +80,15 @@ export default function RegistrationForm(){
         });
       } else {
         setErrors({});
+        setFormData({
+            name: "",
+            email: "",
+            password: "",
+            confirmPassword: "",
+            agreeToTerms: false,
+          });
+        setstrengthPassword("")
+
         toast.success('Registration successful!', {
           position: "top-right",
           autoClose: 2000,
@@ -96,9 +105,7 @@ export default function RegistrationForm(){
         ...prevFormData,
         agreeToTerms: false,
       }));
-      setErrors({
-        agreeToTerms: validationErrors.agreeToTerms,
-      });
+      setErrors(validationErrors);
     }
   };
 
