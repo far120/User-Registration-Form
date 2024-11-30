@@ -59,6 +59,11 @@ export default function RegistrationForm(){
     e.preventDefault();
     const validationErrors = validate();
     if (Object.keys(validationErrors).length > 0) {
+        setFormData({
+            password: "",
+            confirmPassword: "",
+            agreeToTerms: false,
+        })
       setErrors(validationErrors);
       toast.error('Failed Registration', {
         position: "top-right",
@@ -71,6 +76,7 @@ export default function RegistrationForm(){
         theme: "light",
         })
     } else {
+        setErrors({});
         toast.success('Registration successful!', {
             position: "top-right",
             autoClose: 2000,
@@ -96,7 +102,7 @@ export default function RegistrationForm(){
         onSubmit={handleSubmit}
       >
         <h2 className="text-2xl font-bold text-gray-800 mb-6 ">
-          Register for RegistarNow
+           RegistarNow
         </h2>
         {/* Name Field */}
         <div className="mb-4"  >
