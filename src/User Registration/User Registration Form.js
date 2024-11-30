@@ -238,7 +238,7 @@ export default function RegistrationForm(){
         </button>
 
         <div className="mt-6">
-  <h2 className="text-sm font-semibold mb-2">Password Requirements:</h2>
+  <h2 className="text-sm font-semibold mb-2">Password Strength Requirements:</h2>
   <ul className="text-sm text-gray-600">
     <li className="flex items-center">
       <i
