@@ -58,39 +58,51 @@ export default function RegistrationForm(){
   const handleSubmit = (e) => {
     e.preventDefault();
     const validationErrors = validate();
-    if (Object.keys(validationErrors).length > 0) {
-        setFormData({
-            name: formData.name,
-            email: formData.email,
-            password: "",
-            confirmPassword: "",
-            agreeToTerms: false,
+    if (formData.agreeToTerms) {
+      if (Object.keys(validationErrors).length > 0) {
+        setFormData((prevFormData) => ({
+          ...prevFormData,
+          password: "",
+          confirmPassword: "",
+          agreeToTerms: false,
+        }));
+        setErrors(validationErrors);
+  
+        toast.error('Failed Registration', {
+          position: "top-right",
+          autoClose: 2000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
         });
-      setErrors(validationErrors);
-      toast.error('Failed Registration', {
-        position: "top-right",
-        autoClose: 2000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "light",
-        })
-    } else {
+      } else {
         setErrors({});
         toast.success('Registration successful!', {
-            position: "top-right",
-            autoClose: 2000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "light",
-            })
+          position: "top-right",
+          autoClose: 2000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
+      }
+    } else {
+      setFormData((prevFormData) => ({
+        ...prevFormData,
+        agreeToTerms: false,
+      }));
+      setErrors({
+        agreeToTerms: validationErrors.agreeToTerms,
+      });
     }
   };
+
+
 
 
   return (
