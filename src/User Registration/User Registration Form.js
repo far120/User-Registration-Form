@@ -11,7 +11,7 @@ export default function RegistrationForm(){
   });
 
   const [errors, setErrors] = useState({});
-  const [strengthpassword, setstrengthPassword] = useState("");
+  const [strengthpassword, setstrengthPassword] = useState(0);
 
   // Handle input changes
   const handleChange = (e) => {
@@ -26,17 +26,16 @@ export default function RegistrationForm(){
       evaluatestrengthPassword(updatedValue);
     }
   };
-  
-  // Password strength evaluation
-  function evaluatestrengthPassword(password) {
-    if (password.length >= 8 && /[A-Za-z]/.test(password) && /\d/.test(password)) {
-      setstrengthPassword("Strong");
-    } else if (password.length >= 8) {
-      setstrengthPassword("Medium");
-    } else {
-      setstrengthPassword("Weak");
-    }
-  };
+ 
+  function evaluatestrengthPassword(password){
+    let strength = 0
+    if (password.length >= 8) strength += 25
+    if (password.match(/[a-z]+/)) strength += 25
+    if (password.match(/[A-Z]+/)) strength += 25
+    if (password.match(/[0-9]+/)) strength += 25
+    setstrengthPassword(strength)
+  }
+
 
   // Validate form inputs
   const validate = () => {
@@ -67,7 +66,7 @@ export default function RegistrationForm(){
           agreeToTerms: false,
         }));
         setErrors(validationErrors);
-        setstrengthPassword("")
+        setstrengthPassword(0)
         toast.error('Failed Registration', {
           position: "top-right",
           autoClose: 2000,
@@ -87,7 +86,7 @@ export default function RegistrationForm(){
             confirmPassword: "",
             agreeToTerms: false,
           });
-        setstrengthPassword("")
+          setstrengthPassword(0)
 
         toast.success('Registration successful!', {
           position: "top-right",
@@ -119,10 +118,9 @@ export default function RegistrationForm(){
     >
       <form
         className="bg-white p-6 rounded shadow-md w-full max-w-md"
-        // style={{backgroundColor:"#007BFF "}}
         onSubmit={handleSubmit}
       >
-        <h2 className="text-2xl font-bold text-gray-800 mb-6 ">
+        <h2 className="text-2xl font-bold text-gray-800 mb-6 text-center ">
            RegistarNow
         </h2>
         {/* Name Field */}
@@ -134,8 +132,7 @@ export default function RegistrationForm(){
             type="text"
             id="name"
             name="name"
-            className="w-full px-3 py-2 border rounded"
-            style={{backgroundColor:"#007BFF "}}
+            className="w-full px-3 py-2 border rounded border-[#007BFF]"
             value={formData.name}
             onChange={handleChange}
             placeholder="Enter your full name"
@@ -152,8 +149,7 @@ export default function RegistrationForm(){
             type="email"
             id="email"
             name="email"
-            className="w-full px-3 py-2 border rounded"
-            style={{backgroundColor:"#007BFF "}}
+            className="w-full px-3 py-2 border rounded border-[#007BFF]"
             value={formData.email}
             onChange={handleChange}
             placeholder="Enter your email address"
@@ -170,25 +166,22 @@ export default function RegistrationForm(){
             type="password"
             id="password"
             name="password"
-            className="w-full px-3 py-2 border rounded"
-            style={{backgroundColor:"#007BFF "}}
+            className="w-full px-3 py-2 border rounded border-[#007BFF]"
             value={formData.password}
             onChange={handleChange}
             placeholder="Create a password"
           />
-          {strengthpassword && (
-            <p
-              className={`text-sm ${
-                strengthpassword === "Strong"
-                  ? "text-green-300"
-                  : strengthpassword === "Medium"
-                  ? "text-yellow-400"
-                  : "text-red-700"
-              }`}
-            >
-              Password Strength: {strengthpassword}
-            </p>
-          )}
+             <div
+            className={`w-full h-2 mt-2 rounded ${
+              strengthpassword < 50
+                ? "bg-red-500"
+                : strengthpassword < 75
+                ? "bg-yellow-500"
+                : "bg-green-500"
+            }`}
+            style={{ width: `${strengthpassword}%` }}
+          ></div>
+          <p className="text-sm text-gray-500">Password strength: {strengthpassword}%</p>
           {errors.password && (
             <p className="text-red-700 text-sm">{errors.password}</p>
           )}
@@ -203,8 +196,7 @@ export default function RegistrationForm(){
             type="password"
             id="confirmPassword"
             name="confirmPassword"
-            className="w-full px-3 py-2 border rounded"
-            style={{backgroundColor:"#007BFF "}}
+            className="w-full px-3 py-2 border rounded border-[#007BFF]"
             value={formData.confirmPassword}
             onChange={handleChange}
             placeholder="Re-enter your password"
@@ -220,7 +212,7 @@ export default function RegistrationForm(){
             <input
               type="checkbox"
               name="agreeToTerms"
-              className="rounded border-gray-300 "
+              className="rounded border-gray-300  "
               checked={formData.agreeToTerms}
               onChange={handleChange}
             />
@@ -244,6 +236,44 @@ export default function RegistrationForm(){
         >
           Sign Up
         </button>
+
+        <div className="mt-6">
+  <h2 className="text-sm font-semibold mb-2">Password Requirements:</h2>
+  <ul className="text-sm text-gray-600">
+    <li className="flex items-center">
+      <i
+        className={`mr-2 ${
+          formData.password.length >= 8 ? "text-green-500 fas fa-check-circle" : "text-red-500 fas fa-times-circle"
+        }`}
+      ></i>
+      At least 8 characters long
+    </li>
+    <li className="flex items-center">
+      <i
+        className={`mr-2 ${
+          /[a-z]/.test(formData.password) ? "text-green-500 fas fa-check-circle" : "text-red-500 fas fa-times-circle"
+        }`}
+      ></i>
+      Contains lowercase letters
+    </li>
+    <li className="flex items-center">
+      <i
+        className={`mr-2 ${
+          /[A-Z]/.test(formData.password) ? "text-green-500 fas fa-check-circle" : "text-red-500 fas fa-times-circle"
+        }`}
+      ></i>
+      Contains uppercase letters
+    </li>
+    <li className="flex items-center">
+      <i
+        className={`mr-2 ${
+          /[0-9]/.test(formData.password) ? "text-green-500 fas fa-check-circle" : "text-red-500 fas fa-times-circle"
+        }`}
+      ></i>
+      Contains numbers
+    </li>
+  </ul>
+</div>
       </form>
       <ToastContainer />
     </div>
