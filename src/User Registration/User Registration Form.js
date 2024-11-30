@@ -92,7 +92,7 @@ export default function RegistrationForm(){
     >
       <form
         className="bg-white p-6 rounded shadow-md w-full max-w-md"
-        style={{backgroundColor:"#007BFF "}}
+        // style={{backgroundColor:"#007BFF "}}
         onSubmit={handleSubmit}
       >
         <h2 className="text-2xl font-bold text-gray-800 mb-6 ">
@@ -108,7 +108,7 @@ export default function RegistrationForm(){
             id="name"
             name="name"
             className="w-full px-3 py-2 border rounded"
-            // style={{backgroundColor:"#007BFF "}}
+            style={{backgroundColor:"#007BFF "}}
             value={formData.name}
             onChange={handleChange}
             placeholder="Enter your full name"
@@ -126,7 +126,7 @@ export default function RegistrationForm(){
             id="email"
             name="email"
             className="w-full px-3 py-2 border rounded"
-            // style={{backgroundColor:"#007BFF "}}
+            style={{backgroundColor:"#007BFF "}}
             value={formData.email}
             onChange={handleChange}
             placeholder="Enter your email address"
@@ -144,7 +144,7 @@ export default function RegistrationForm(){
             id="password"
             name="password"
             className="w-full px-3 py-2 border rounded"
-            // style={{backgroundColor:"#007BFF "}}
+            style={{backgroundColor:"#007BFF "}}
             value={formData.password}
             onChange={handleChange}
             placeholder="Create a password"
@@ -177,7 +177,7 @@ export default function RegistrationForm(){
             id="confirmPassword"
             name="confirmPassword"
             className="w-full px-3 py-2 border rounded"
-            // style={{backgroundColor:"#007BFF "}}
+            style={{backgroundColor:"#007BFF "}}
             value={formData.confirmPassword}
             onChange={handleChange}
             placeholder="Re-enter your password"
@@ -197,9 +197,9 @@ export default function RegistrationForm(){
               checked={formData.agreeToTerms}
               onChange={handleChange}
             />
-            <span className="ml-2 text-black">
+            <span className="ml-2 text-gray-700">
               I agree to the{" "}
-              <a href="#" className="text-black underline">
+              <a href="#" className="text-blue-500 underline">
                 Terms and Conditions
               </a>
             </span>
