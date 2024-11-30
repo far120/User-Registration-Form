@@ -41,7 +41,7 @@ export default function RegistrationForm(){
   // Validate form inputs
   const validate = () => {
     const newErrors = {};
-    if (!formData.name.trim())
+    if (!formData.name.length > 0)
          newErrors.name = "Name is required.";
     if (!/^\S+@\S+\.\S+$/.test(formData.email))
       newErrors.email = "Invalid email address.";
@@ -60,10 +60,12 @@ export default function RegistrationForm(){
     const validationErrors = validate();
     if (Object.keys(validationErrors).length > 0) {
         setFormData({
+            name: formData.name,
+            email: formData.email,
             password: "",
             confirmPassword: "",
             agreeToTerms: false,
-        })
+        });
       setErrors(validationErrors);
       toast.error('Failed Registration', {
         position: "top-right",
@@ -89,7 +91,7 @@ export default function RegistrationForm(){
             })
     }
   };
-  console.log(errors)
+
 
   return (
     <div
