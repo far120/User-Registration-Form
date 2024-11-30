@@ -1,0 +1,10 @@
+body{
+    margin: 0 20px;
+}
+nav {
+    display: flex;
+    background-color: aqua;
+}
+.li{
+    color: red;
+}
